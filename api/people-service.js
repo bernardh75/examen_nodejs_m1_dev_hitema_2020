@@ -6,10 +6,27 @@ module.exports = class PeopleService {
     }
 
     updatePeople(id, people) {
-        // To be implemented!
+        let person = this.peoples[id];
+        if (person == null) {
+            return HttpStatus.NOT_FOUND;
+        }
+        this.peoples[id] = people;
+        return HttpStatus.OK;
     }
     
     getPeople(filters) {
-        // To be implemented!
+        if (Object.entries(filters).length === 0){
+            return this.peoples;
+        }
+
+        let tabpeople = [];        
+        this.peoples.forEach(people => {
+            for (const key in filters) {
+                if (people[key] === filters[key]) {
+                    tabpeople.push(people);
+                }
+            }
+        });
+        return tabpeople;    
     }
 }
